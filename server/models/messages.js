@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
+const {DateTime} = require('luxon');
 
 const Schema = mongoose.Schema;
 
-const messages = new Schema({
+const messagesSchema = new Schema({
 	name: {
 		type:String,
 		required:true,
-		minLength:3,
+		minLength:1,
 		maxLength:15
 	},
 	message:{
@@ -16,7 +17,13 @@ const messages = new Schema({
 	},
 	date: {
 		type:Date,
-		default: () => Date.new(),
-        immutable:true
+		default: () => new Date(),
+		immutable:true
 	}
 });
+
+messagesSchema.virtual('date_formatted').get(function(){
+	return DateTime.fromJSDate(this.date).toFormat('LLL dd yyyy HH:mm:ss');
+});
+
+module.exports = mongoose.model('messages', messagesSchema);
