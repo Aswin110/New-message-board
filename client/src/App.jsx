@@ -4,6 +4,7 @@ import Board from './components/board';
 
 function App() {
   const [message, setMessage] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function msg () {
@@ -11,7 +12,8 @@ function App() {
         const data = await fetch('http://localhost:3000/message');
         const res = await data.json();
         setMessage(res);
-        console.log(res[0].name);
+        // console.log(res[0].name);
+        setLoading(false);
       }
       catch(error){
         console.log(error)
@@ -21,6 +23,13 @@ function App() {
     
   },[])
 
+  const postData = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target)
+    // console.log(e);
+    console.log('name:', data.get('name'), ', message:', data.get('message') );
+  }
+
   return (
     <>
       <h1 className="text-3xl font-bold underline">
@@ -28,7 +37,9 @@ function App() {
       </h1>
       <Board
         messages = {message}
-        />
+        postData ={postData}
+        loading = {loading}
+      />
     </>
   )
 }
