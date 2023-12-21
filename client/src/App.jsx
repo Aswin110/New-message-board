@@ -14,6 +14,7 @@ function App() {
         setMessage(res.data);
         // console.log(res[0].name);
         setLoading(false);
+        window.scrollTo(0, document.body.scrollHeight);
       }
       catch(error){
         console.log(error)
