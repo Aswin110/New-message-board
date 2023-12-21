@@ -30,11 +30,13 @@ function App() {
     const messageText = data.get('message');
     const messageData = {name, message: messageText}
     // console.log(e);
-    console.log(messageData);
+    console.log('message',messageData);
     
     try {
-      const response = await axios.post('http://localhost:3000/message/new', messageData);
-      console.log(response.data);
+      await axios.post('http://localhost:3000/message/new', messageData);
+      const value = await axios.get('http://localhost:3000/message'); 
+      setMessage(value.data);
+      console.log(value.data);
     } catch (error) {
       console.log(error);
       alert('Server error');
