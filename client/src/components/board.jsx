@@ -1,8 +1,9 @@
 import LoadingSpinner from "./loading";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const Board = ({messages, postData, loading}) => {
    const ref = useRef(null);
+   const [messageInput, setMessageInput] = useState("");
 
    const scrollToBottom = () => {
       const lastChildElement = ref.current?.lastElementChild;
@@ -13,12 +14,15 @@ const Board = ({messages, postData, loading}) => {
       scrollToBottom();
    },[messages])
 
+   const handleFormSubmit = async (e) => {
+      e.preventDefault();
+      await postData(e);
+      setMessageInput("");
+    };
+
  return(
-   <div className="w-[30rem] mx-auto my-8 p-4 border rounded shadow ">
-      <button onClick={scrollToBottom} style={{ marginLeft: '8px' }}>
-          Scroll to bottom
-        </button>
-        
+   <div className="w-[30rem] mx-auto my-8 p-4 border rounded shadow "> 
+
       <div className="h-96 overflow-y-auto border mb-4 p-2 scroll-smooth">
          <div className="mb-2 w-full h-full" >
             <div ref={ref}>
@@ -43,8 +47,7 @@ const Board = ({messages, postData, loading}) => {
          </div>        
       </div >
       
-
-      <form method="POST" action='\' onSubmit={(e)=>postData(e)}>
+      <form method="POST" action='\' onSubmit={handleFormSubmit}>
          <div className="mb-4">
          <input
             type="text"
@@ -61,6 +64,8 @@ const Board = ({messages, postData, loading}) => {
             required={true}
             id='message'
             name="message"
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
             placeholder="Type your message..."
             className="flex-1 p-2 border rounded-l"
          />

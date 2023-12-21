@@ -12,9 +12,7 @@ function App() {
       try{
         const res = await axios.get('http://localhost:3000/message');
         setMessage(res.data);
-        // console.log(res[0].name);
         setLoading(false);
-        window.scrollTo(0, document.body.scrollHeight);
       }
       catch(error){
         console.log(error)
@@ -30,14 +28,11 @@ function App() {
     const name = data.get('name');
     const messageText = data.get('message');
     const messageData = {name, message: messageText}
-    // console.log(e);
-    console.log('message',messageData);
-    
+        
     try {
       await axios.post('http://localhost:3000/message/new', messageData);
       const value = await axios.get('http://localhost:3000/message'); 
       setMessage(value.data);
-      console.log(value.data);
     } catch (error) {
       console.log(error);
       alert('Server error');
