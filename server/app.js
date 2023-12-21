@@ -9,6 +9,7 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const messageRouter = require('./routes/messageRoute');
+const messageModel = require('./models/messages');
 
 var app = express();
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import Board from './components/board';
+import axios from 'axios';
 
 function App() {
   const [message, setMessage] = useState([]);
@@ -9,9 +10,8 @@ function App() {
   useEffect(() => {
     async function msg () {
       try{
-        const data = await fetch('http://localhost:3000/message');
-        const res = await data.json();
-        setMessage(res);
+        const res = await axios.get('http://localhost:3000/message');
+        setMessage(res.data);
         // console.log(res[0].name);
         setLoading(false);
       }
@@ -23,11 +23,22 @@ function App() {
     
   },[])
 
-  const postData = (e) => {
+  const postData = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target)
+    const name = data.get('name');
+    const messageText = data.get('message');
+    const messageData = {name, message: messageText}
     // console.log(e);
-    console.log('name:', data.get('name'), ', message:', data.get('message') );
+    console.log(messageData);
+    
+    try {
+      const response = await axios.post('http://localhost:3000/message/new', messageData);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      alert('Server error');
+    }
   }
 
   return (

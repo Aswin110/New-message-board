@@ -25,7 +25,7 @@ const Board = ({messages, postData, loading}) => {
          )))}
          </div>
       </div>
-      <form method="" action='\' onSubmit={(e)=>postData(e)}>
+      <form method="POST" action='\' onSubmit={(e)=>postData(e)}>
          <div className="mb-4">
          <input
             type="text"

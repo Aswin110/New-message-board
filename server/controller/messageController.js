@@ -6,3 +6,7 @@ exports.message_list = asyncHandler(async (req, res, next) => {
 	res.json(message);
 });
 
+exports.message_post = asyncHandler(async(req, res, next )=> {
+	res.send('not implemented post '+ req.body.name);
+});
+
