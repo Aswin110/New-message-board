@@ -4,7 +4,7 @@ import Board from './components/board';
 import axios from 'axios';
 
 function App() {
-  const apiUrl = import.meta.env.REACT_APP_API_BASE_URL || 'https://message-backend-5gpe.onrender.com';
+  const apiUrl = import.meta.env.REACT_APP_API_BASE_URL ;
 
   const [message, setMessage] = useState([]);
   const [loading, setLoading] = useState(true);
