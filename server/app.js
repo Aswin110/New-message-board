@@ -5,16 +5,27 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const dotenv = require('dotenv');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const messageRouter = require('./routes/messageRoute');
 const messageModel = require('./models/messages');
+const compression = require('compression');
+const helmet = require('helmet');
+const RateLimiter = require('express-rate-limit');
 
 var app = express();
 
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+	windowMs: 1 * 60 * 1000, // 1 minute
+	max: 100,
+});
+
+dotenv.config();
 mongoose.set('strictQuery', false);
-const mongoDB = 'mongodb+srv://aswinashok:a2bn1povilk@locallibrary.uudclkp.mongodb.net/chat_room?retryWrites=true&w=majority';
+
+const mongoDB = process.env.MONGODB_URI;
 
 main().catch((err)=> console.log(err));
 
@@ -26,11 +37,14 @@ async function main () {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(helmet());
+app.use(limiter);
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());  
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

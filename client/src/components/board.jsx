@@ -1,7 +1,9 @@
 import LoadingSpinner from "./loading";
+import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from "react";
 
 const Board = ({messages, postData, loading}) => {
+   // console.log('messages:',messages)
    const ref = useRef(null);
    const [messageInput, setMessageInput] = useState("");
 
@@ -80,5 +82,11 @@ const Board = ({messages, postData, loading}) => {
     </div>
  )
 }
+
+Board.propTypes = {
+   messages: PropTypes.array.isRequired,
+   postData: PropTypes.func.isRequired,
+   loading: PropTypes.bool.isRequired,
+ };
 
 export default Board;

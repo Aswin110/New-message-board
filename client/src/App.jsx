@@ -4,13 +4,17 @@ import Board from './components/board';
 import axios from 'axios';
 
 function App() {
+  const apiUrl = import.meta.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+
   const [message, setMessage] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function msg () {
       try{
-        const res = await axios.get('http://localhost:3000/message');
+        const res = await axios.get(`${apiUrl}/message`);
+        console.log('${apiUrl}/message', `${apiUrl}/message`)
+
         setMessage(res.data);
         setLoading(false);
       }
@@ -30,8 +34,8 @@ function App() {
     const messageData = {name, message: messageText}
         
     try {
-      await axios.post('http://localhost:3000/message/new', messageData);
-      const value = await axios.get('http://localhost:3000/message'); 
+      await axios.post(`${apiUrl}/message/new`, messageData);
+      const value = await axios.get(`${apiUrl}/message`); 
       setMessage(value.data);
     } catch (error) {
       console.log(error);
