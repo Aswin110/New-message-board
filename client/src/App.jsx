@@ -4,7 +4,7 @@ import Board from './components/board';
 import axios from 'axios';
 
 function App() {
-  const apiUrl = import.meta.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+  const apiUrl = import.meta.env.REACT_APP_API_BASE_URL || 'https://message-backend-5gpe.onrender.com';
 
   const [message, setMessage] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,8 +13,6 @@ function App() {
     async function msg () {
       try{
         const res = await axios.get(`${apiUrl}/message`);
-        console.log('${apiUrl}/message', `${apiUrl}/message`)
-
         setMessage(res.data);
         setLoading(false);
       }
