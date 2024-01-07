@@ -4,7 +4,7 @@ import Board from './components/board';
 import axios from 'axios';
 
 function App() {
-  const apiUrl = import.meta.env.REACT_APP_API_BASE_URL ;
+  const apiUrl = import.meta.env.VITE_URL;
 
   const [message, setMessage] = useState([]);
   const [loading, setLoading] = useState(true);
